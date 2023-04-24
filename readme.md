@@ -1,15 +1,23 @@
+<div align="center">
+
+[![My Workflow Run Bot](https://github.com/watchakorn-18k/bot-news-it-discord/actions/workflows/run_bot.yml/badge.svg)](https://github.com/watchakorn-18k/bot-news-it-discord/actions/workflows/run_bot.yml)
+
+</div>
 
 # bot-news-it-discord
-A brief and descriptive title for your project.
+
+<p align="center">
+<img src="https://cdn.discordapp.com/attachments/1100109646909407404/1100174969373212813/image.png">
+</p>
 
 ## Description
 
-A detailed description of the project, including its purpose, features, and any other relevant information.
+📑 Bot updates news about IT and programming with Update every hour
 
 ## Getting Started
 
 ```
-git clone https://github.com/<User Name Github>/bot-news-it-discord.git
+fenv clone https://github.com/<User Name Github>/bot-news-it-discord.git
 
 cd bot-news-it-discord
 
@@ -18,6 +26,8 @@ cd bot-news-it-discord
 ## Installation
 
 ```
+cd bot-news-it-discord
+
 # create virtualenv auto name
 fenv onlyenv
 
@@ -28,23 +38,35 @@ fenv install
 
 ## Usage
 
-Instructions on how to use the project, including any usage examples and screenshots.
+[📑 INVITE BOT TO YOUR SERVER](https://discord.com/api/oauth2/authorize?client_id=1100078503946358915&permissions=2199023987904&scope=bot)
 
 ## Tree
 
 <!--- Start Tree --->
+
 ```bash
 .
 └── bot-news-it-discord/
+        └──.git/
+        └──.github/
         └──.vscode/
                 └──settings.json
         └──env_bot-news-it-discord/
+                └── Lib/
+                └── Scripts
+                └── .gitignore
+                └── pyvenv.cfg
+        └──__pycache__/
+        └──.env
         └──.gitignore
+        └──.tmp
         └──main.py
+        └──news.py
         └──readme.md
         └──requirements.txt
 
 ```
+
 <!--- End Tree --->
 
 ## Contributing
@@ -54,4 +76,3 @@ If you would like to contribute to the project, include a section on how to do s
 ## License
 
 Include information about the license used for the project, such as the name of the license (e.g. MIT, Apache 2.0, etc.) and a link to the license text.
-
