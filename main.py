@@ -72,11 +72,11 @@ async def on_ready():
                     await channel.send(embed=embed)
                     async for message in channel.history(limit=1):
                         msg_old = message
+                    for i in random.sample(list("💻📱🖨🖊📷📺🕹🔌🔋💾💿📀🎞📽🔍🔬💡⏰"), 9):
+                        await message.add_reaction(i)
                 break
-    for i in random.sample(list("💻📱🖨🖊📷📺🕹🔌🔋💾💿📀🎞📽🔍🔬💡⏰"), 9):
-        await message.add_reaction(i)
 
-    exit()
+    await client.close()
 
 
 @client.event
