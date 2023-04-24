@@ -26,13 +26,6 @@ jobs:
           API_NEWS: ${{ secrets.API_NEWS }}
         run: |
           python main.py
-
-      - name: Check for changes
-        run: git status --porcelain
-        id: changes
-      - name: Commit changes
-        if: steps.changes.outputs.stdout != ''
-        run: |
           git config --global user.email "${{ secrets.USER_EMAIL }}"
           git config --global user.name "${{ secrets.USER_NAME }}"
           git add .tmp
