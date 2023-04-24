@@ -1,0 +1,21 @@
+name: My Workflow Run Bot
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: # for manual workflow trigger
+  schedule:
+    - cron: "0 * * * *" # runs at every one hours
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      - name: Install packages from requirements.txt
+        run: pip install -r requirements.txt
+      - name: Run script
+        run: python main.py
