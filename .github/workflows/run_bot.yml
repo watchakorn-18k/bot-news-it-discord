@@ -22,3 +22,8 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
           API_NEWS: ${{ secrets.API_NEWS }}
         run: python main.py
+          git config --global user.email "${{ secrets.USER_EMAIL }}"
+          git config --global user.name "${{ secrets.USER_NAME }}"
+          git add .tmp
+          git commit -m "Update Text News"
+          git push origin master
