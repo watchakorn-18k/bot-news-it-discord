@@ -6,8 +6,11 @@ on:
   schedule:
     - cron: "0 * * * *" # runs at every one hours
 jobs:
-  build:
+  run-python-script:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
