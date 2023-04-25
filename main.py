@@ -33,6 +33,12 @@ async def on_ready():
     data = news.get_data()
     data = data["articles"][0]
 
+    try:
+        data_url = data["author"].replace(" ", "+")
+        data_url_icon = data["author"].replace(" ", "+")
+    except:
+        data_url = "Unknown"
+        data_url_icon = "Unknown"
     embed = discord.Embed.from_dict(
         {
             "title": data["title"],
@@ -51,12 +57,8 @@ async def on_ready():
             },
             "author": {
                 "name": data["author"],
-                "url": "https://www.google.com/search?q={}".format(
-                    data["author"].replace(" ", "+")
-                ),
-                "icon_url": "https://ui-avatars.com/api/?name={}".format(
-                    data["author"].replace(" ", "+")
-                ),
+                "url": "https://www.google.com/search?q={}".format(data_url),
+                "icon_url": "https://ui-avatars.com/api/?name={}".format(data_url_icon),
             },
             "url": data["url"],
             "image": {"url": data["urlToImage"]},
