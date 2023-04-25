@@ -17,7 +17,7 @@ newsapi = NewsApiClient(api_key=api_key)
 
 def get_data():
     return newsapi.get_everything(
-        q="technology and programing",
+        q="Programming",
         language="en",
         sort_by="publishedAt",
         page_size=1,
