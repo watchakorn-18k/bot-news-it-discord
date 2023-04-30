@@ -3,6 +3,22 @@ import dotenv
 import os
 import news
 import random
+from googletrans import Translator
+
+translator = Translator()
+
+
+def translater(func):
+    def wrapper(*args):
+        return translator.translate(func(*args), dest="th").text
+
+    return wrapper
+
+
+@translater
+def get_data(text):
+    return text
+
 
 dotenv.load_dotenv()
 
@@ -41,12 +57,16 @@ async def on_ready():
         data_url_icon = "Unknown"
     embed = discord.Embed.from_dict(
         {
-            "title": data["title"],
-            "description": data["description"],
+            "title": get_data(data["title"]),
+            "description": get_data(data["description"]),
             "color": 1498792,
             "fields": [
-                {"name": "content", "value": data["content"], "inline": True},
-                {"name": "published", "value": data["publishedAt"], "inline": True},
+                {"name": "content", "value": get_data(data["content"]), "inline": True},
+                {
+                    "name": "published",
+                    "value": get_data(data["publishedAt"]),
+                    "inline": True,
+                },
             ],
             "footer": {
                 "icon_url": "https://cdn.discordapp.com/attachments/372372440334073859/1100141262205616229/f2c8a1b2-a1a8-43bd-a83e-b50c3bb74ec1.jpg",
