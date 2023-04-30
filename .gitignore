@@ -3,3 +3,4 @@
 __pycache__
 .env
 env_bot-news-it-discord
+.tmp
