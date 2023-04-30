@@ -69,6 +69,22 @@ fenv install
 
 <!--- End Tree --->
 
+## Change Log
+
+- add translate with google translate in main.py
+
+```py
+def translater(func):
+        def wrapper(*args):
+
+                return translator.translate(func(*args), dest="th").text
+                """
+                "th" can change your local language 👆🏻
+                """
+        return wrapper
+
+```
+
 ## Contributing
 
 If you would like to contribute to the project, include a section on how to do so, including any guidelines and best practices.
