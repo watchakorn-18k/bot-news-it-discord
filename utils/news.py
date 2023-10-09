@@ -1,19 +1,14 @@
 from newsapi import NewsApiClient
-import dotenv
-import os
-import datetime
+from dotenv import load_dotenv
+from os import getenv
 
-
-dotenv.load_dotenv()
-
+load_dotenv()
 
 # Set up your API key and endpoint
-api_key = os.getenv("API_NEWS")
-
+api_key = getenv("API_NEWS")
 
 # Init
 newsapi = NewsApiClient(api_key=api_key)
-
 
 def get_data():
     return newsapi.get_everything(
