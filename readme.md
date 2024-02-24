@@ -10,6 +10,13 @@
 <img src="https://cdn.discordapp.com/attachments/1100109646909407404/1100174969373212813/image.png">
 </p>
 
+# .env
+
+```.env
+TOKEN= <TOKEN_BOT>
+API_NEWS= <API newsapi.org>
+```
+
 ## Description
 
 📑 Bot updates news about IT and programming with Update every hour

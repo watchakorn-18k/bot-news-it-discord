@@ -1,7 +1,6 @@
 from newsapi import NewsApiClient
 import dotenv
 import os
-import datetime
 
 
 dotenv.load_dotenv()
@@ -15,7 +14,7 @@ api_key = os.getenv("API_NEWS")
 newsapi = NewsApiClient(api_key=api_key)
 
 
-def get_data():
+def get_data_news():
     return newsapi.get_everything(
         q="Programming",
         language="en",
