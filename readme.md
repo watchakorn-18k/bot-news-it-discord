@@ -94,4 +94,4 @@ def translater(func):
 
 ## Contributing
 
-If you would like to contribute to the project, include a section on how to do so, including any guidelines and best practices.
+If you would like to contribute to the project, include a section on how to do so, including any guidelines and best practices
