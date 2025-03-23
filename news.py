@@ -16,7 +16,7 @@ newsapi = NewsApiClient(api_key=api_key)
 
 def get_data_news():
     return newsapi.get_everything(
-        q="Programming",
+        q="Developer",
         language="en",
         sort_by="publishedAt",
         page_size=1,
