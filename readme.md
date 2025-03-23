@@ -7,7 +7,7 @@
 # bot-news-it-discord
 
 <p align="center">
-<img src="https://cdn.discordapp.com/attachments/1100109646909407404/1211076253847789679/image.png?ex=65ece1a7&is=65da6ca7&hm=0ee99b163ac3649b29916fd091db2e5ec014a783a08d37b6fdde11bbcec445ba&">
+<img src="screenshot/image_1.png">
 </p>
 
 # .env
@@ -95,7 +95,3 @@ def translater(func):
 ## Contributing
 
 If you would like to contribute to the project, include a section on how to do so, including any guidelines and best practices.
-
-## License
-
-Include information about the license used for the project, such as the name of the license (e.g. MIT, Apache 2.0, etc.) and a link to the license text.

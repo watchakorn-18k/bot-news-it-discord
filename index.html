@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot News IT - Discord Bot</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .screenshot {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body class="text-white">
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 glass-effect py-4">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <img src="images/logo.png" alt="Bot News IT Logo" class="logo-circle">
+                <h1 class="text-2xl font-bold">Bot News IT</h1>
+            </div>
+            <div class="space-x-6">
+                <a href="#features" class="hover:text-indigo-400 transition">Features</a>
+                <a href="#invite" class="hover:text-indigo-400 transition">Invite Bot</a>
+                <a href="#about" class="hover:text-indigo-400 transition">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-20">
+        <div class="text-center max-w-3xl mx-auto px-6">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                Your IT News Bot for Discord
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 mb-8">
+                Stay updated with the latest IT news directly in your Discord server. Simple, fast, and reliable.
+            </p>
+            <a href="https://discord.com/api/oauth2/authorize?client_id=1100078503946358915&permissions=2199023987904&scope=bot"
+                target="_blank"
+                class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg glass-effect transition">
+                Invite to Discord
+            </a>
+        </div>
+    </section>
+
+    <!-- Bot in Action Section -->
+    <section id="example" class="py-20 bg-gradient-to-b from-transparent to-[#0f172a]">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12">Bot in Action</h2>
+            <div class="glass-effect p-8 rounded-lg">
+                <p class="text-gray-300 text-lg text-center mb-6">
+                    See how Bot News IT delivers the latest IT news directly to your Discord server.
+                </p>
+                <div class="flex justify-center">
+                    <img src="images/example.png" alt="Bot News IT Screenshot" class="screenshot rounded-3xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12">Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 glass-effect rounded-lg text-center">
+                    <h3 class="text-xl font-semibold mb-4">Real-Time News</h3>
+                    <p class="text-gray-300">
+                        Get the latest IT news fetched and delivered to your server instantly.
+                    </p>
+                </div>
+                <div class="p-6 glass-effect rounded-lg text-center">
+                    <h3 class="text-xl font-semibold mb-4">Easy Setup</h3>
+                    <p class="text-gray-300">
+                        Add the bot to your server with just a few clicks and start using it right away.
+                    </p>
+                </div>
+                <div class="p-6 glass-effect rounded-lg text-center">
+                    <h3 class="text-xl font-semibold mb-4">Customizable</h3>
+                    <p class="text-gray-300">
+                        Tailor the bot’s behavior to suit your community’s needs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Invite Bot Section -->
+    <section id="invite" class="py-20 bg-gradient-to-b from-transparent to-[#0f172a]">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6">Invite Bot News IT</h2>
+            <p class="text-lg text-gray-300 mb-8">
+                Add the bot to your Discord server and stay informed with IT updates.
+            </p>
+            <a href="https://discord.com/api/oauth2/authorize?client_id=1100078503946358915&permissions=2199023987904&scope=bot"
+                target="_blank"
+                class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg glass-effect transition">
+                Invite Now
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12">About the Project</h2>
+            <div class="glass-effect p-8 rounded-lg">
+                <p class="text-gray-300 text-lg">
+                    Bot News IT is an open-source Discord bot created by Watchakorn-18k to bring the latest IT news to
+                    your server. Built with simplicity and efficiency in mind, it’s perfect for tech enthusiasts and
+                    communities. Check out the source code and contribute on GitHub!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 glass-effect">
+        <div class="max-w-7xl mx-auto px-6 text-center text-gray-400">
+            <p>© 2025 Bot News IT. All rights reserved.</p>
+            <p>Made with ❤️ by <a href="https://github.com/watchakorn-18k" target="_blank"
+                    class="hover:text-indigo-400">Watchakorn-18k</a></p>
+        </div>
+    </footer>
+</body>
+
+</html>
