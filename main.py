@@ -4,6 +4,8 @@ import os
 import news
 import random
 from googletrans import Translator
+import requests
+import time
 
 try:
     from textblob import TextBlob
@@ -204,22 +206,91 @@ with open(".tmp", "r") as f:
 
 
 def clean_html_tags(text):
-    """ลบ HTML tags ออกจากข้อความ"""
+    """ลบ HTML tags ออกจากข้อความ แต่เก็บ Code Block ไว้"""
     if not text:
         return ""
     
     if BS4_ENABLED:
         try:
             soup = BeautifulSoup(text, "html.parser")
+            
+            # Handle <pre> tags (Block code)
+            for tag in soup.find_all('pre'):
+                code_content = tag.get_text()
+                # Replace with markdown code block
+                tag.replace_with(f"\n```\n{code_content}\n```\n")
+
+            # Handle <code> tags (Inline code)
+            for tag in soup.find_all('code'):
+                code_content = tag.get_text()
+                tag.replace_with(f"`{code_content}`")
+
             return soup.get_text(separator=" ", strip=True)
         except Exception as e:
             print(f"BS4 Error: {e}")
             
     # Fallback to regex if BS4 fails or not installed
     import re
+    # Try to preserve code blocks first
+    # Replace <pre>...</pre> with ```...```
+    text = re.sub(r'<pre>(.*?)</pre>', r'\n```\n\1\n```\n', text, flags=re.DOTALL)
+    # Replace <code>...</code> with `...`
+    text = re.sub(r'<code>(.*?)</code>', r'`\1`', text, flags=re.DOTALL)
+    
     clean = re.compile('<.*?>')
     return re.sub(clean, '', text)
 
+
+def get_website_ping(url):
+    """
+    Check website response time
+    Returns: string with ms or N/A
+    """
+    if not url:
+        return "N/A"
+    
+    try:
+        start_time = time.time()
+        requests.get(url, timeout=5)
+        end_time = time.time()
+        ping_ms = round((end_time - start_time) * 1000)
+        return f"{ping_ms}ms"
+    except Exception as e:
+        print(f"Ping Error: {e}")
+        return "Timeout/Error"
+
+
+def calculate_rpg_stats(text):
+    """
+    Calculate RPG-style stats for the article.
+    STR: Content weight/length (เนื้อหาหนัก)
+    AGI: Reading speed/brevity (อ่านเร็ว)
+    INT: Vocabulary complexity (ศัพท์ยาก)
+    Returns: dict with STR, AGI, INT (1-10)
+    """
+    if not text:
+        return {"STR": 1, "AGI": 1, "INT": 1}
+    
+    words = text.split()
+    word_count = len(words)
+    if word_count == 0:
+        return {"STR": 1, "AGI": 1, "INT": 1}
+        
+    avg_word_len = sum(len(w) for w in words) / word_count
+    
+    # STR: Based on word count (Heavy content)
+    # > 500 words = 10 STR
+    str_stat = min(10, max(1, int(word_count / 50)))
+    
+    # AGI: Based on inverse word count (Fast to read)
+    # < 50 words = 10 AGI, > 600 words = 1 AGI
+    agi_stat = max(1, min(10, int(11 - (word_count / 50))))
+    
+    # INT: Based on average word length (Complex vocab)
+    # Avg len > 6.5 = 10 INT
+    int_stat = min(10, max(1, int((avg_word_len - 3) * 3)))
+    
+    return {"STR": str_stat, "AGI": agi_stat, "INT": int_stat}
 
 # Global variable to store the fetched article for this run
 current_article_data = None
@@ -265,6 +336,13 @@ def fetch_article_once():
         raw_data["content"] = clean_html_tags(raw_data.get("content", ""))
         article_data = raw_data
 
+    # Calculate Ping
+    if article_data.get("url"):
+        print(f"⚡ Pinging {article_data['url']}...")
+        article_data["ping"] = get_website_ping(article_data["url"])
+    else:
+        article_data["ping"] = "N/A"
+
     current_article_data = article_data
     return article_data
 
@@ -290,6 +368,9 @@ def embed_data(channel_lang="en"):
     
     # 📊 Create Reading Progress Bar
     reading_bar = create_reading_progress_bar(article_text)
+    
+    # ⚔️ Calculate RPG Stats
+    rpg_stats = calculate_rpg_stats(article_text)
     
     # Translate and add emoji to title
     translated_title = get_data_translate(data["title"], channel_lang)
@@ -323,6 +404,16 @@ def embed_data(channel_lang="en"):
             "value": get_data_translate(data.get("publishedAt", "Unknown"), channel_lang),
             "inline": True,
         },
+        {
+            "name": "⚡ Website Ping",
+            "value": data.get("ping", "N/A"),
+            "inline": True,
+        },
+        {
+            "name": "⚔️ RPG Stats",
+            "value": f"**STR** {rpg_stats['STR']} | **AGI** {rpg_stats['AGI']} | **INT** {rpg_stats['INT']}",
+            "inline": True,
+        },
     ])
     
     # Footer text with or without AI mention
@@ -333,7 +424,7 @@ def embed_data(channel_lang="en"):
     embed = discord.Embed.from_dict(
         {
             "title": title_with_sentiment,
-            "description": get_data_translate(data.get("description", ""), channel_lang),
+            "description": get_data_translate(data.get("description", ""), channel_lang)[:4000], # Limit to 4000 chars
             "color": sentiment["color"],  # 🎨 Dynamic color based on sentiment!
             "fields": fields,
             "footer": {
