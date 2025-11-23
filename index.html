@@ -1,154 +1,851 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bot News IT - The Ultimate Discord IT News Bot</title>
+    <meta
+      name="description"
+      content="Stay ahead with Bot News IT. The fastest, most reliable Discord bot for real-time tech news, updates, and trends. Add it to your server today!"
+    />
+    <meta
+      name="keywords"
+      content="discord bot, it news, tech news, technology updates, discord server tool, bot news it, real-time news, tech trends, developer tools"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <link
+      rel="canonical"
+      href="https://watchakorn-18k.github.io/bot-news-it-discord"
+    />
+    <link rel="icon" type="image/png" href="images/logo.png" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bot News IT - Discord Bot</title>
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://watchakorn-18k.github.io/bot-news-it-discord"
+    />
+    <meta
+      property="og:title"
+      content="Bot News IT - The Ultimate Discord IT News Bot"
+    />
+    <meta
+      property="og:description"
+      content="Stay ahead with Bot News IT. The fastest, most reliable Discord bot for real-time tech news, updates, and trends. Add it to your server today!"
+    />
+    <meta
+      property="og:image"
+      content="https://watchakorn-18k.github.io/bot-news-it-discord/images/example.png"
+    />
+    <meta property="og:site_name" content="Bot News IT" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://watchakorn-18k.github.io/bot-news-it-discord"
+    />
+    <meta
+      property="twitter:title"
+      content="Bot News IT - The Ultimate Discord IT News Bot"
+    />
+    <meta
+      property="twitter:description"
+      content="Stay ahead with Bot News IT. The fastest, most reliable Discord bot for real-time tech news, updates, and trends. Add it to your server today!"
+    />
+    <meta
+      property="twitter:image"
+      content="https://watchakorn-18k.github.io/bot-news-it-discord/images/example.png"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Bot News IT",
+        "applicationCategory": "CommunicationApplication",
+        "operatingSystem": "Discord",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "A Discord bot that delivers the latest IT and tech news directly to your server.",
+        "image": "https://watchakorn-18k.github.io/bot-news-it-discord/images/example.png",
+        "author": {
+          "@type": "Person",
+          "name": "Watchakorn-18k",
+          "url": "https://github.com/watchakorn-18k"
+        }
+      }
+    </script>
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google Fonts: Space Grotesk & Inter -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Remix Icon CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0a0a0f;
+        color: #ffffff;
+        overflow-x: hidden;
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
 
-        .logo-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+      #canvas-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.6;
+      }
 
-        .screenshot {
-            max-width: 100%;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+      main {
+        flex: 1;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      /* Animated Gradient Background */
+      .gradient-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        background: linear-gradient(
+          135deg,
+          #050507 0%,
+          #1a1447 40%,
+          #0a0a0f 100%
+        );
+      }
+
+      /* Enhanced Glass Effect */
+      .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .glass-card:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(139, 92, 246, 0.5);
+        box-shadow: 0 8px 32px 0 rgba(139, 92, 246, 0.2);
+        transform: translateY(-5px);
+      }
+
+      /* Premium Button */
+      .btn-premium {
+        position: relative;
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        padding: 14px 32px;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        color: white;
+        display: inline-block;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+        transition: all 0.3s ease;
+      }
+
+      .btn-premium::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .btn-premium:hover::before {
+        left: 100%;
+      }
+
+      .btn-premium:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 50px rgba(99, 102, 241, 0.6);
+      }
+
+      /* Logo Animation */
+      .logo-circle {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(139, 92, 246, 0.5);
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        transition: all 0.3s ease;
+      }
+
+      .logo-circle:hover {
+        transform: rotate(360deg) scale(1.1);
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.8);
+      }
+
+      /* Navbar Glass */
+      .navbar-glass {
+        background: rgba(10, 10, 15, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Feature Card Glow */
+      .feature-card {
+        position: relative;
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 16px;
+        padding: 2px;
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.5),
+          rgba(139, 92, 246, 0.5)
+        );
+        -webkit-mask: linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .feature-card:hover::before {
+        opacity: 1;
+      }
+
+      /* Text Gradient */
+      .text-gradient {
+        background: linear-gradient(
+          135deg,
+          #6366f1 0%,
+          #8b5cf6 50%,
+          #ec4899 100%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% auto;
+        animation: textShine 3s linear infinite;
+      }
+
+      @keyframes textShine {
+        to {
+          background-position: 200% center;
         }
+      }
+
+      /* Screenshot Container */
+      .screenshot-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+
+      .screenshot {
+        width: 100%;
+        border-radius: 24px;
+        transition: transform 0.5s ease;
+      }
+
+      .screenshot-container:hover .screenshot {
+        transform: scale(1.02);
+      }
+
+      /* Fade In Animation */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease forwards;
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Stagger Animation */
+      .fade-in:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .fade-in:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .fade-in:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+
+      /* Nav Links */
+      .nav-link {
+        position: relative;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        padding: 8px 0;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover {
+        color: #ffffff;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      /* Section Spacing */
+      section {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Icon Styles */
+      .feature-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+      }
+
+      /* Decorative Background Image */
+      .bg-decoration {
+        position: fixed;
+        top: 10%;
+        right: -10%;
+        width: 900px;
+        height: auto;
+        opacity: 0.08;
+        transform: rotate(-15deg) scale(1.2);
+        z-index: -1;
+        pointer-events: none;
+        filter: blur(3px);
+      }
+
+      .bg-decoration-2 {
+        position: fixed;
+        bottom: 5%;
+        left: -15%;
+        width: 700px;
+        height: auto;
+        opacity: 0.06;
+        transform: rotate(12deg) scale(1.1);
+        z-index: -1;
+        pointer-events: none;
+        filter: blur(4px);
+      }
+
+      /* GitHub Stats Button */
+      .github-stats {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 8px 16px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        color: white;
+      }
+
+      .github-stats:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(139, 92, 246, 0.5);
+        box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+      }
+
+      .github-stat {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .github-stat i {
+        font-size: 16px;
+        color: #8b5cf6;
+      }
+
+      .stat-count {
+        font-weight: 600;
+        color: white;
+      }
     </style>
-</head>
+  </head>
 
-<body class="text-white">
+  <body>
+    <!-- Three.js Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <!-- Animated Background Base -->
+    <div class="gradient-bg"></div>
+
+    <!-- Decorative Background Images -->
+    <img
+      src="images/example.png"
+      alt=""
+      class="bg-decoration"
+      aria-hidden="true"
+    />
+    <img
+      src="images/example.png"
+      alt=""
+      class="bg-decoration-2"
+      aria-hidden="true"
+    />
+
     <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 glass-effect py-4">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <img src="images/logo.png" alt="Bot News IT Logo" class="logo-circle">
-                <h1 class="text-2xl font-bold">Bot News IT</h1>
+    <nav class="fixed top-0 w-full z-50 navbar-glass">
+      <div
+        class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="#" class="flex items-center gap-3 group">
+          <img
+            src="images/logo.png"
+            alt="Bot News IT Logo"
+            class="logo-circle"
+          />
+          <span class="text-2xl font-bold text-white">
+            Bot <span class="text-gradient">News IT</span>
+          </span>
+        </a>
+        <div class="hidden md:flex space-x-8 items-center">
+          <a href="#features" class="nav-link">Features</a>
+          <a href="#invite" class="nav-link">Invite Bot</a>
+          <a href="#about" class="nav-link">About</a>
+
+          <!-- GitHub Stats -->
+          <a
+            href="https://github.com/watchakorn-18k/bot-news-it-discord"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="github-stats"
+            aria-label="View on GitHub"
+          >
+            <i class="ri-github-fill text-xl"></i>
+            <div class="github-stat">
+              <i class="ri-star-fill"></i>
+              <span class="stat-count" id="github-stars">--</span>
             </div>
-            <div class="space-x-6">
-                <a href="#features" class="hover:text-indigo-400 transition">Features</a>
-                <a href="#invite" class="hover:text-indigo-400 transition">Invite Bot</a>
-                <a href="#about" class="hover:text-indigo-400 transition">About</a>
+            <div class="github-stat">
+              <i class="ri-git-branch-fill"></i>
+              <span class="stat-count" id="github-forks">--</span>
             </div>
+          </a>
         </div>
+      </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center pt-20">
-        <div class="text-center max-w-3xl mx-auto px-6">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6">
-                Your IT News Bot for Discord
-            </h1>
-            <p class="text-lg md:text-xl text-gray-300 mb-8">
-                Stay updated with the latest IT news directly in your Discord server. Simple, fast, and reliable.
+    <!-- Main Content -->
+    <main>
+      <!-- Hero Section -->
+      <section class="min-h-screen flex items-center justify-center pt-20 px-6">
+        <div class="text-center max-w-4xl mx-auto">
+          <h1 class="text-6xl md:text-7xl font-bold mb-6 leading-tight">
+            The Ultimate <span class="text-gradient">IT News Bot</span><br />for
+            Discord
+            <i class="ri-rocket-line text-5xl align-middle text-purple-400"></i>
+          </h1>
+          <p
+            class="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed"
+          >
+            No more FOMO. Get the hottest IT news dropped straight into your
+            server.
+            <span class="text-purple-400 font-semibold"
+              >Fast. Lit. Reliable. <i class="ri-fire-fill align-middle"></i
+            ></span>
+          </p>
+          <a
+            href="https://discord.com/api/oauth2/authorize?client_id=1100078503946358915&permissions=2199023987904&scope=bot"
+            target="_blank"
+            class="btn-premium flex items-center justify-center gap-2"
+          >
+            <i class="ri-discord-fill text-xl"></i> Add to Server
+          </a>
+        </div>
+      </section>
+
+      <!-- Bot in Action Section -->
+      <section id="example" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+          <h2 class="text-5xl md:text-6xl font-bold text-center mb-6">
+            See It in <span class="text-gradient">Action</span>
+            <i class="ri-eye-line align-middle text-4xl text-purple-400"></i>
+          </h2>
+          <p class="text-xl text-gray-300 text-center mb-16 max-w-2xl mx-auto">
+            Peep how Bot News IT delivers the tea
+            <i class="ri-cup-line align-middle"></i> (tech news) straight to
+            your Discord.
+          </p>
+          <div class="glass-card p-8 md:p-12 rounded-3xl">
+            <div class="screenshot-container">
+              <img
+                src="images/example.png"
+                alt="Bot News IT Screenshot"
+                class="screenshot"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+          <h2 class="text-5xl md:text-6xl font-bold text-center mb-6">
+            Why It's <span class="text-gradient">Goated</span>
+            <i
+              class="ri-vip-crown-line align-middle text-4xl text-purple-400"
+            ></i>
+          </h2>
+          <p class="text-xl text-gray-300 text-center mb-16 max-w-2xl mx-auto">
+            Everything you need to keep your community vibing
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+              class="glass-card feature-card p-8 rounded-2xl text-center fade-in"
+            >
+              <div class="feature-icon">
+                <i class="ri-flashlight-fill text-white"></i>
+              </div>
+              <h3 class="text-2xl font-bold mb-4">Real-Time Updates</h3>
+              <p class="text-gray-300 leading-relaxed">
+                News drops instantly. Be the first to know what's popping in the
+                tech world.
+              </p>
+            </div>
+            <div
+              class="glass-card feature-card p-8 rounded-2xl text-center fade-in"
+            >
+              <div class="feature-icon">
+                <i class="ri-focus-3-line text-white"></i>
+              </div>
+              <h3 class="text-2xl font-bold mb-4">EZ Setup</h3>
+              <p class="text-gray-300 leading-relaxed">
+                Add to server, click click, done. No brainer setup.
+              </p>
+            </div>
+            <div
+              class="glass-card feature-card p-8 rounded-2xl text-center fade-in"
+            >
+              <div class="feature-icon">
+                <i class="ri-palette-line text-white"></i>
+              </div>
+              <h3 class="text-2xl font-bold mb-4">Your Vibe</h3>
+              <p class="text-gray-300 leading-relaxed">
+                Customize it to match your server's aesthetic. Make it yours.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Invite Bot Section -->
+      <section id="invite" class="py-32 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="glass-card p-12 md:p-16 rounded-3xl">
+            <h2 class="text-5xl md:text-6xl font-bold mb-6">
+              Ready to <span class="text-gradient">Level Up?</span>
+              <i
+                class="ri-arrow-up-double-line align-middle text-4xl text-purple-400"
+              ></i>
+            </h2>
+            <p
+              class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed"
+            >
+              Don't sleep on this. Add Bot News IT and keep your squad updated.
+              Join the hype train! <i class="ri-group-line align-middle"></i>
             </p>
-            <a href="https://discord.com/api/oauth2/authorize?client_id=1100078503946358915&permissions=2199023987904&scope=bot"
-                target="_blank"
-                class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg glass-effect transition">
-                Invite to Discord
+            <a
+              href="https://discord.com/api/oauth2/authorize?client_id=1100078503946358915&permissions=2199023987904&scope=bot"
+              target="_blank"
+              class="btn-premium text-lg flex items-center justify-center gap-2 mx-auto w-fit"
+            >
+              <i class="ri-rocket-2-fill text-xl"></i> Let's Gooo - Invite Now!
             </a>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Bot in Action Section -->
-    <section id="example" class="py-20 bg-gradient-to-b from-transparent to-[#0f172a]">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12">Bot in Action</h2>
-            <div class="glass-effect p-8 rounded-lg">
-                <p class="text-gray-300 text-lg text-center mb-6">
-                    See how Bot News IT delivers the latest IT news directly to your Discord server.
-                </p>
-                <div class="flex justify-center">
-                    <img src="images/example.png" alt="Bot News IT Screenshot" class="screenshot rounded-3xl">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="py-20">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12">Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-6 glass-effect rounded-lg text-center">
-                    <h3 class="text-xl font-semibold mb-4">Real-Time News</h3>
-                    <p class="text-gray-300">
-                        Get the latest IT news fetched and delivered to your server instantly.
-                    </p>
-                </div>
-                <div class="p-6 glass-effect rounded-lg text-center">
-                    <h3 class="text-xl font-semibold mb-4">Easy Setup</h3>
-                    <p class="text-gray-300">
-                        Add the bot to your server with just a few clicks and start using it right away.
-                    </p>
-                </div>
-                <div class="p-6 glass-effect rounded-lg text-center">
-                    <h3 class="text-xl font-semibold mb-4">Customizable</h3>
-                    <p class="text-gray-300">
-                        Tailor the bot’s behavior to suit your community’s needs.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Invite Bot Section -->
-    <section id="invite" class="py-20 bg-gradient-to-b from-transparent to-[#0f172a]">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-6">Invite Bot News IT</h2>
-            <p class="text-lg text-gray-300 mb-8">
-                Add the bot to your Discord server and stay informed with IT updates.
+      <!-- About Section -->
+      <section id="about" class="py-32 px-6">
+        <div class="max-w-5xl mx-auto">
+          <h2 class="text-5xl md:text-6xl font-bold text-center mb-6">
+            Behind the <span class="text-gradient">Scenes</span>
+            <i class="ri-movie-line align-middle text-4xl text-purple-400"></i>
+          </h2>
+          <p class="text-xl text-gray-300 text-center mb-16 max-w-2xl mx-auto">
+            Built with
+            <i class="ri-heart-fill text-red-500 align-middle"></i> for the fam
+          </p>
+          <div class="glass-card p-10 md:p-14 rounded-3xl">
+            <p
+              class="text-lg md:text-xl text-gray-200 leading-relaxed text-center"
+            >
+              Bot News IT is an
+              <span class="text-purple-400 font-semibold">open-source</span>
+              project by
+              <a
+                href="https://github.com/watchakorn-18k"
+                target="_blank"
+                class="text-gradient font-bold hover:underline"
+                >Watchakorn-18k</a
+              >. We keep it real with
+              <span class="text-purple-400 font-semibold">simplicity</span> and
+              <span class="text-purple-400 font-semibold">efficiency</span>.
+              Perfect for tech heads. Check the code, it's clean af.
             </p>
-            <a href="https://discord.com/api/oauth2/authorize?client_id=1100078503946358915&permissions=2199023987904&scope=bot"
-                target="_blank"
-                class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg glass-effect transition">
-                Invite Now
-            </a>
+          </div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12">About the Project</h2>
-            <div class="glass-effect p-8 rounded-lg">
-                <p class="text-gray-300 text-lg">
-                    Bot News IT is an open-source Discord bot created by Watchakorn-18k to bring the latest IT news to
-                    your server. Built with simplicity and efficiency in mind, it’s perfect for tech enthusiasts and
-                    communities. Check out the source code and contribute on GitHub!
-                </p>
-            </div>
-        </div>
-    </section>
+      </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="py-6 glass-effect">
-        <div class="max-w-7xl mx-auto px-6 text-center text-gray-400">
-            <p>© 2025 Bot News IT. All rights reserved.</p>
-            <p>Made with ❤️ by <a href="https://github.com/watchakorn-18k" target="_blank"
-                    class="hover:text-indigo-400">Watchakorn-18k</a></p>
-        </div>
+    <footer
+      class="py-10 px-6 mt-auto border-t border-gray-800 bg-[#0a0a0f]/80 backdrop-blur-md"
+    >
+      <div class="max-w-7xl mx-auto text-center">
+        <p class="text-gray-400 mb-2">
+          © 2025 Bot News IT. All rights reserved.
+        </p>
+        <p class="text-gray-400 flex items-center justify-center gap-1">
+          Made with <i class="ri-heart-3-fill text-red-500"></i> by
+          <a
+            href="https://github.com/watchakorn-18k"
+            target="_blank"
+            class="text-gradient font-semibold hover:underline"
+          >
+            Watchakorn-18k
+          </a>
+        </p>
+      </div>
     </footer>
-</body>
 
+    <!-- Three.js Animation Script -->
+    <script>
+      const container = document.getElementById("canvas-container");
+
+      // Scene setup
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: true,
+      });
+
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      container.appendChild(renderer.domElement);
+
+      // Particles
+      const particlesGeometry = new THREE.BufferGeometry();
+      const particlesCount = 2000;
+      const posArray = new Float32Array(particlesCount * 3);
+
+      for (let i = 0; i < particlesCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 15; // Spread particles
+      }
+
+      particlesGeometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(posArray, 3)
+      );
+
+      // Material
+      const material = new THREE.PointsMaterial({
+        size: 0.02,
+        color: 0x8b5cf6, // Purple tint
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending,
+      });
+
+      // Mesh
+      const particlesMesh = new THREE.Points(particlesGeometry, material);
+      scene.add(particlesMesh);
+
+      // Position camera
+      camera.position.z = 3;
+
+      // Mouse interaction
+      let mouseX = 0;
+      let mouseY = 0;
+
+      document.addEventListener("mousemove", (event) => {
+        mouseX = event.clientX / window.innerWidth - 0.5;
+        mouseY = event.clientY / window.innerHeight - 0.5;
+      });
+
+      // Animation Loop
+      const clock = new THREE.Clock();
+
+      function animate() {
+        const elapsedTime = clock.getElapsedTime();
+
+        // Rotate entire system slowly
+        particlesMesh.rotation.y = elapsedTime * 0.05;
+        particlesMesh.rotation.x = elapsedTime * 0.02;
+
+        // Mouse parallax effect
+        particlesMesh.rotation.y += mouseX * 0.05;
+        particlesMesh.rotation.x += mouseY * 0.05;
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+
+      // Handle Resize
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    </script>
+
+    <!-- Smooth Scroll Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+              target.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -100px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "translateY(0)";
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll(".fade-in").forEach((el) => {
+          observer.observe(el);
+        });
+
+        // Fetch GitHub Stats
+        async function fetchGitHubStats() {
+          try {
+            const response = await fetch(
+              "https://api.github.com/repos/watchakorn-18k/bot-news-it-discord"
+            );
+            const data = await response.json();
+
+            // Update stars
+            const starsElement = document.getElementById("github-stars");
+            if (starsElement && data.stargazers_count !== undefined) {
+              starsElement.textContent = data.stargazers_count.toLocaleString();
+            }
+
+            // Update forks
+            const forksElement = document.getElementById("github-forks");
+            if (forksElement && data.forks_count !== undefined) {
+              forksElement.textContent = data.forks_count.toLocaleString();
+            }
+          } catch (error) {
+            console.error("Failed to fetch GitHub stats:", error);
+            // Keep the -- placeholder on error
+          }
+        }
+
+        // Fetch stats on page load
+        fetchGitHubStats();
+      });
+    </script>
+  </body>
 </html>
