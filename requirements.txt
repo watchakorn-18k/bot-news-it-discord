@@ -47,3 +47,7 @@ tzlocal==4.3
 urllib3==1.26.15
 virtualenv==20.22.0
 yarl==1.9.1
+textblob==0.17.1
+feedparser==6.0.10
+edge-tts==6.1.9
+langdetect==1.0.9
